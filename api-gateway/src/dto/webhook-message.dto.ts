@@ -15,6 +15,8 @@ export class WebhookMessageDto {
 
   senderName: string;
 
+  content: string;
+
   @ApiHideProperty()
   @IsOptional()
   channel: string;

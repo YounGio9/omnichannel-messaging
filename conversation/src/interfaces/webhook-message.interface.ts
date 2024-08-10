@@ -1,3 +1,5 @@
+import { Channel } from '@prisma/client';
+
 export interface WebhookMessage {
   messageId: string;
 
@@ -5,5 +7,7 @@ export interface WebhookMessage {
 
   senderName: string;
 
-  channel: string;
+  channel: Channel;
+
+  content: string;
 }

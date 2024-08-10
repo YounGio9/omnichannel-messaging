@@ -7,7 +7,12 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBasicAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBasicAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { ConversationService } from './conversation.service';
 import { RegisterDto } from 'src/dto/register.dto';
 import {
@@ -24,13 +29,14 @@ export class ConversationController {
   @Post('register')
   @ApiResponse({ status: 409, description: 'User exists' })
   @ApiOperation({ description: 'Register a new agent account' })
+  @ApiTags('Auth')
   @HttpCode(HttpStatus.CREATED)
   register(@Body() payload: RegisterDto) {
     return this.conversationService.register(payload);
   }
 
   @Post('webhook/:channel')
-  @ApiOperation({ description: 'Register a new agent account' })
+  @ApiOperation({ description: 'Handle webhook from different channels' })
   @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   webhook(

@@ -37,6 +37,8 @@ model Chat {
   channel    Channel
   agent      User       @relation(fields: [agentId], references: [id])
   status     ChatStatus @default(OPEN)
+  customer   Customer   @relation(fields: [customerId], references: [externalId])
+  customerId String
   reason     String
   created_at DateTime   @default(now())
   closed_at  DateTime?
@@ -48,8 +50,9 @@ model Chat {
 model Customer {
   id         String   @id @default(uuid())
   name       String
-  externalId String
+  externalId String   @unique
   created_at DateTime @default(now())
+  Chat       Chat[]
 }
 
 enum SenderType {
@@ -62,7 +65,7 @@ model Message {
   chat       Chat       @relation(fields: [chatId], references: [id])
   chatId     String
   senderType SenderType
-  sender_id  String
+  senderId   String
   content    String
   sentAt     DateTime   @default(now())
 }
